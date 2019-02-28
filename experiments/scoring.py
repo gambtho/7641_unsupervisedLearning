@@ -10,7 +10,7 @@ def balanced_accuracy(truth, pred):
 
 def f1_accuracy(truth, pred):
     wts = compute_sample_weight('balanced', truth)
-    return f1_score(truth, pred, average="binary", sample_weight=wts)
+    return f1_score(truth, pred, average="micro", sample_weight=wts)
 
 
 scorer = make_scorer(balanced_accuracy)
