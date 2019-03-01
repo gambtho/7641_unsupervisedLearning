@@ -37,17 +37,17 @@ class LDAExperiment(experiments.BaseExperiment):
         tmp = pd.Series(np.sort(fs)[::-1])
         tmp.to_csv(self._out.format('{}_scree.csv'.format(self._details.ds_name)))
 
-        # # %% Data for 2
-        # lda = LinearDiscriminantAnalysis()
-        # grid = {'filter__n': self._dims, 'NN__alpha': self._nn_reg, 'NN__hidden_layer_sizes': self._nn_arch}
-        # mlp = MLPClassifier(activation='relu', max_iter=2000, early_stopping=True, random_state=self._details.seed)
-        # pipe = Pipeline([('lda', lda), ('NN', mlp)], memory=experiments.pipeline_memory)
-        # gs, final_estimator = self.gs_with_best_estimator(pipe, grid)
-        # self.log("Grid search complete")
-        #
-        # tmp = pd.DataFrame(gs.cv_results_)
-        # tmp.to_csv(self._out.format('{}_dim_red.csv'.format(self._details.ds_name)))
-        # self.log("Done")
+        # %% Data for 2
+        lda = LinearDiscriminantAnalysis()
+        grid = {'filter__n': self._dims, 'NN__alpha': self._nn_reg, 'NN__hidden_layer_sizes': self._nn_arch}
+        mlp = MLPClassifier(activation='relu', max_iter=2000, early_stopping=True, random_state=self._details.seed)
+        pipe = Pipeline([('lda', lda), ('NN', mlp)], memory=experiments.pipeline_memory)
+        gs, final_estimator = self.gs_with_best_estimator(pipe, grid)
+        self.log("Grid search complete")
+        
+        tmp = pd.DataFrame(gs.cv_results_)
+        tmp.to_csv(self._out.format('{}_dim_red.csv'.format(self._details.ds_name)))
+        self.log("Done")
 
     def perform_cluster(self, dim_param):
         self.log('Running clustering for {} with dim param {}'.format(self.experiment_name(), dim_param))
