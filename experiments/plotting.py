@@ -11,7 +11,7 @@ import pandas as pd
 import matplotlib as mpl
 import matplotlib.axes as maxes
 import matplotlib.pyplot as plt
-
+plt.switch_backend('agg')
 
 import matplotlib.cm as cm
 from kneed import KneeLocator
