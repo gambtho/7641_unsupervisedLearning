@@ -501,7 +501,6 @@ def read_and_plot_scree(problem, file, output_dir):
     df = pd.read_csv(file, header=None).dropna().set_index(0)
     p = plot_scree(title, df, problem['name'], multiple_runs=multi_scree, xlabel='Number of Components',
                    ylabel=ylabel)
-    p = watermark(p)
     if multi_scree:
         logger.info('{}/{}/{}_scree_{}.png {}'.format(output_dir, problem['name'], ds_name, scree_index, ylabel))
         p.savefig(
@@ -520,7 +519,6 @@ def read_and_plot_tsne(problem, file, output_dir):
     title = '{} - {}'.format(ds_readable_name, problem['name'])
     df = pd.read_csv(file)
     p = plot_tsne(title, df)
-    p = watermark(p)
     p.savefig(
         '{}/{}/{}_tsne.png'.format(output_dir, problem['name'], ds_name),
         format='png', bbox_inches='tight', dpi=150)
@@ -533,7 +531,6 @@ def read_and_plot_sse(problem, file, output_dir):
     title = '{} - {}: SSE vs Number of Clusters'.format(ds_readable_name, problem['name'])
     df = pd.read_csv(file).set_index('k')
     p = plot_sse(title, df)
-    p = watermark(p)
     p.savefig(
         '{}/{}/{}_sse.png'.format(output_dir, problem['name'], ds_name),
         format='png', bbox_inches='tight', dpi=150)
@@ -545,8 +542,7 @@ def read_and_plot_acc(problem, file, output_dir):
 
     title = '{} - {}: Accuracy vs Number of Clusters'.format(ds_readable_name, problem['name'])
     df = pd.read_csv(file).set_index('k')
-    p = plot_sse(title, df)
-    p = watermark(p)
+    p = plot_acc(title, df)
     p.savefig(
         '{}/{}/{}_acc.png'.format(output_dir, problem['name'], ds_name),
         format='png', bbox_inches='tight', dpi=150)
@@ -559,7 +555,6 @@ def read_and_plot_adj_mi(problem, file, output_dir):
     title = '{} - {}: Adj. MI vs Number of Clusters'.format(ds_readable_name, problem['name'])
     df = pd.read_csv(file).set_index('k')
     p = plot_adj_mi(title, df)
-    p = watermark(p)
     p.savefig(
         '{}/{}/{}_adj_mi.png'.format(output_dir, problem['name'], ds_name),
         format='png', bbox_inches='tight', dpi=150)
@@ -572,7 +567,6 @@ def read_and_plot_loglikelihood(problem, file, output_dir):
     title = '{} - {}: Log Likelihood vs Number of Clusters'.format(ds_readable_name, problem['name'])
     df = pd.read_csv(file).set_index('k')
     p = plot_loglikelihood(title, df)
-    p = watermark(p)
     p.savefig(
         '{}/{}/{}_loglikelihood.png'.format(output_dir, problem['name'], ds_name),
         format='png', bbox_inches='tight', dpi=150)
@@ -585,7 +579,6 @@ def read_and_plot_bic(problem, file, output_dir):
     title = '{} - {}: BIC vs Number of Clusters'.format(ds_readable_name, problem['name'])
     df = pd.read_csv(file).set_index('k')
     p = plot_bic(title, df)
-    p = watermark(p)
     p.savefig(
         '{}/{}/{}_bic.png'.format(output_dir, problem['name'], ds_name),
         format='png', bbox_inches='tight', dpi=150)
@@ -598,7 +591,6 @@ def read_and_plot_sil_score(problem, file, output_dir):
     title = '{} - {}: Silhouette Score vs Number of Clusters'.format(ds_readable_name, problem['name'])
     df = pd.read_csv(file).set_index('k')
     p = plot_sil_score(title, df)
-    p = watermark(p)
     p.savefig(
         '{}/{}/{}_sil_score.png'.format(output_dir, problem['name'], ds_name),
         format='png', bbox_inches='tight', dpi=150)
@@ -614,7 +606,6 @@ def read_and_plot_sil_samples(problem, file, output_dir):
     for k in cluster_sizes:
         logger.info(" - Processing k={}".format(k))
         p = plot_sil_samples(title, df, k)
-        p = watermark(p)
         p.savefig(
             '{}/{}/{}_sil_samples_{}.png'.format(output_dir, problem['name'], ds_name, k),
             format='png', bbox_inches='tight', dpi=150)
@@ -648,9 +639,11 @@ def read_and_plot_combined(problem, clustering_algo, ds_name, ds_readable_name, 
     # Trim the extra columns
     data_columns = [k for k in data_columns if k != 'sse' and k != 'BIC']
 
+    plt.close()
+    plt.figure()
+
     p = plot_combined(title, plot_df, data_columns, tsne_data=None, extra_data=extra_df, extra_data_name=extra_name,
                       xlabel='Number of Clusters', ylabel='Value')
-    p = watermark(p)
     p.savefig(
         '{}/{}/{}_{}_combined.png'.format(output_dir, problem['name'], ds_name, clustering_algo),
         format='png', bbox_inches='tight', dpi=150)
