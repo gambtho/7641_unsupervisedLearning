@@ -52,10 +52,9 @@ pipeline_memory = None
 # BEST_NN_PARAMS = {'NN__activation': ['relu'], 'NN__alpha': [1.0],
 #                  'NN__hidden_layer_sizes': [(36, 36)], 'NN__learning_rate_init': [0.016]}
 
-BEST_NN_PARAMS = {'NN__activation': ['relu'], 'NN__alpha': [2.95],
-                  'NN__hidden_layer_sizes': [(64,)], 'NN__learning_rate_init': [0.016]}
+# BEST_NN_PARAMS = {'NN__activation': ['relu'], 'NN__alpha': [2.95],'NN__hidden_layer_sizes': [(64,)], 'NN__learning_rate_init': [0.016]}
 
-# BEST_NN_PARAMS = {}
+BEST_NN_PARAMS = {}
 
 
 
